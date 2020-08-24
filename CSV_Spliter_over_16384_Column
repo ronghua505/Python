@@ -1,0 +1,49 @@
+import csv
+from collections import OrderedDict
+from datetime import datetime
+from tkinter import *
+import xlrd
+import xlwt
+import xlsxwriter
+
+import os
+output1=[]
+output2=[]
+cast_number=input("please input number you want cast,must be int and less than 16384")
+cast_number=int(cast_number)
+book=xlsxwriter.Workbook('STAT.xlsx')
+
+def sheetwrite(sheet,row,str):
+    for m in range(len(str)):
+        sheet.write_row(row,m,str[m:m+1])
+
+with open("outPut_LOG.csv","r") as f:
+    reader=csv.reader(f)
+    for row in reader:
+        output1.
+        (row)
+
+max=len(max(output1))
+for i in range((int(max/int(cast_number))+1)):
+    filename="./output"+str(i)+".csv"
+    if os.path.isfile(filename):
+        os.unlink(filename)
+    #os.remove(filename)
+for i in range((int(max/int(cast_number))+1)):
+    sheet=book.add_worksheet("output"+str(i))
+    filename="./output"+str(i)+".csv"
+    with open(filename, "w") as f1:
+        write=csv.writer(f1)
+        for j in range(len(output1)):
+            if len(output1[j])>=i*cast_number+cast_number:
+                write.writerow(output1[j][cast_number*i:cast_number*i+cast_number])
+                sheetwrite(sheet ,j, output1[j][cast_number*i:cast_number*i+cast_number])
+                #sheet.write(0,0,output1[j][cast_number*i:cast_number*i+cast_number])
+            elif i*cast_number<len(output1[j])<i*cast_number+cast_number:
+                write.writerow(output1[j][cast_number*i:])
+                sheetwrite(sheet, j,output1[j][cast_number*i:])
+            elif len(output1[j]) < i * cast_number:
+                write.writerow("")
+    f1.close()
+
+book.close()
